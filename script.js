@@ -1,33 +1,44 @@
 function convertToRoman(num) {
-  const romanNumerals = [
-    { value: 1000, symbol: 'M' },
-    { value: 900, symbol: 'CM' },
-    { value: 500, symbol: 'D' },
-    { value: 400, symbol: 'CD' },
-    { value: 100, symbol: 'C' },
-    { value: 90, symbol: 'XC' },
-    { value: 50, symbol: 'L' },
-    { value: 40, symbol: 'XL' },
-    { value: 10, symbol: 'X' },
-    { value: 9, symbol: 'IX' },
-    { value: 5, symbol: 'V' },
-    { value: 4, symbol: 'IV' },
-    { value: 1, symbol: 'I' }
-  ];
+  	const obj = {
+      0:['M',1000], 
+      1:['D', 500], 
+      2:['C', 100], 
+      3:['L', 50], 
+      4:['X', 10], 
+      5:['V', 5], 
+      6:['I', 1]
+    };
 
-  let romanNumeral = '';
+  //your code here
+	let roman = '';
+  let i = 0;
 
-  for (let i = 0; i < romanNumerals.length; i++) {
-    while (num >= romanNumerals[i].value) {
-      romanNumeral += romanNumerals[i].symbol;
-      num -= romanNumerals[i].value;
+  while (num > 0) {
+    if (num >= obj[i][1]) {
+      roman += obj[i][0];
+      num -= obj[i][1];
+    } else if (i % 2 === 0 && i < 6 && num >= obj[i][1] - obj[i + 2][1]) {
+      roman += obj[i + 2][0] + obj[i][0];
+      num -= obj[i][1] - obj[i + 2][1];
+      i++;
+    } else if (i % 2 === 1 && i < 6 && num >= obj[i][1] - obj[i + 1][1]) {
+      roman += obj[i + 1][0] + obj[i][0];
+      num -= obj[i][1] - obj[i + 1][1];
+      i++;
+    } else {
+      i++;
     }
   }
 
-  return romanNumeral;
-}
+  return roman;
 
-// Example usage:
-const number = 3549;
-const romanRepresentation = convertToRoman(number);
-console.log(romanRepresentation); // Output: "MMMDXLIX"
+}
+// You can test your code by running the above function and printing it to console by pressing the run button at the top. To run it with input 36, uncomment the following line
+
+// console.log(convertToRoman(36));
+
+
+
+
+// do not edit below this line
+module.exports = convertToRoman
